@@ -2,11 +2,11 @@ export const path = {
 	home() {
 		return '/';
 	},
-	topics() {
-		return `/topics`;
+	topics(topicName: string) {
+		return `/topics/${topicName}`;
 	},
-	post() {
-		return `/posts`;
+	post(topicName: string, postId: string) {
+		return `/topics/${topicName}/posts/${postId}`;
 	},
 	new() {
 		`/new`;
