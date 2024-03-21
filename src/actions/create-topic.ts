@@ -6,5 +6,5 @@ import { NextRequest } from 'next/server';
 
 export async function createTopic(topic: NextRequest) {
 	await auth.POST(topic);
-	revalidatePath('/');
+	// revalidatePath('/');
 }
