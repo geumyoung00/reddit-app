@@ -4,6 +4,9 @@ import {
 	NavbarBrand,
 	NavbarContent,
 	NavbarItem,
+	Popover,
+	PopoverTrigger,
+	PopoverContent,
 	Input,
 	Button,
 	Avatar,
@@ -28,7 +31,18 @@ export default async function Header() {
 			</NavbarContent>
 			<NavbarContent justify='end'>
 				{session?.user ? (
-					<Avatar src={session.user.image?.toString()} />
+					<Popover placement='left'>
+						<PopoverTrigger>
+							<Avatar src={session.user.image || ''} />
+						</PopoverTrigger>
+						<PopoverContent>
+							<div className='p-4'>
+								<form action={actions.signOut}>
+									<Button type='submit'>로그아웃</Button>
+								</form>
+							</div>
+						</PopoverContent>
+					</Popover>
 				) : (
 					<>
 						<NavbarItem>
