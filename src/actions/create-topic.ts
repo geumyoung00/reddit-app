@@ -1,10 +1,9 @@
 'use server';
 
-import * as auth from '@/auth';
+import * as actions from '@/actions';
 import { revalidatePath } from 'next/cache';
-import { NextRequest } from 'next/server';
 
-export async function createTopic(topic: NextRequest) {
-	await auth.POST(topic);
+export async function createTopic(formData: FormData) {
+	await actions.createTopic(formData);
 	// revalidatePath('/');
 }
