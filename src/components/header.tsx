@@ -9,7 +9,6 @@ import {
 } from '@nextui-org/react';
 
 export default async function Header() {
-	const contentAuth = <HeaderAuth />;
 	return (
 		<Navbar className='shadow mb-6'>
 			<NavbarBrand>
@@ -22,7 +21,9 @@ export default async function Header() {
 					<Input />
 				</NavbarItem>
 			</NavbarContent>
-			<NavbarContent justify='end'>{contentAuth}</NavbarContent>
+			<NavbarContent justify='end'>
+				<HeaderAuth />
+			</NavbarContent>
 		</Navbar>
 	);
 }
