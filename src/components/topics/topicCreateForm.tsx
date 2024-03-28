@@ -1,4 +1,7 @@
+'use client';
+
 import * as actions from '@/actions';
+import { createTopic } from '@/actions';
 import {
 	Input,
 	Button,
@@ -7,15 +10,18 @@ import {
 	PopoverTrigger,
 	PopoverContent,
 } from '@nextui-org/react';
+import { useFormState } from 'react-dom';
 
 export default function TopicCreateForm() {
+	const [formState, formAction] = useFormState(createTopic, initialState);
+
 	return (
 		<Popover placement='bottom-end'>
 			<PopoverTrigger>
 				<Button color='primary'>New Topic</Button>
 			</PopoverTrigger>
 			<PopoverContent>
-				<form action={actions.createTopic}>
+				<form action={formAction}>
 					<div className='flex flex-col gap-4 p-4 w-80'>
 						<h3 className='text-lg'>Create a Topic</h3>
 						<Input
