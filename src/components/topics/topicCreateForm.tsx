@@ -13,7 +13,7 @@ import {
 import { useFormState } from 'react-dom';
 
 export default function TopicCreateForm() {
-	const [formState, formAction] = useFormState(createTopic, initialState);
+	const [formState, formAction] = useFormState(createTopic, { erros: {} });
 
 	return (
 		<Popover placement='bottom-end'>
@@ -21,7 +21,7 @@ export default function TopicCreateForm() {
 				<Button color='primary'>New Topic</Button>
 			</PopoverTrigger>
 			<PopoverContent>
-				<form action={formAction}>
+				<form action={actions.createTopic}>
 					<div className='flex flex-col gap-4 p-4 w-80'>
 						<h3 className='text-lg'>Create a Topic</h3>
 						<Input

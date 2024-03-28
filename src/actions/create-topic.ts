@@ -27,5 +27,5 @@ export async function createTopic(formState: Errors, formData: FormData) {
 	}
 
 	// revalidatePath('/');
-	return { errors: {} };
+	return { errors: { name: '', description: '' } };
 }
