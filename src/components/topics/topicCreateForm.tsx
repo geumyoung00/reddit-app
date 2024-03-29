@@ -1,6 +1,5 @@
 'use client';
 
-import * as actions from '@/actions';
 import { createTopic } from '@/actions';
 import {
 	Input,
@@ -13,7 +12,12 @@ import {
 import { useFormState } from 'react-dom';
 
 export default function TopicCreateForm() {
-	const [formState, formAction] = useFormState(createTopic, { errors: {} });
+	const [formState, formAction] = useFormState(createTopic, {
+		errors: {},
+	});
+
+	console.log(!!formState?.errors.name);
+	console.log(formState?.errors.name);
 
 	return (
 		<Popover placement='bottom-end'>
@@ -29,12 +33,16 @@ export default function TopicCreateForm() {
 							label='Name'
 							labelPlacement='outside'
 							placeholder='Name'
+							isInvalid={!!formState?.errors.name}
+							errorMessage={formState?.errors.name?.join(' ')}
 						/>
 						<Textarea
 							name='description'
 							label='Description'
 							labelPlacement='outside'
 							placeholder='Describe your topic'
+							isInvalid={!!formState?.errors.description}
+							errorMessage={formState?.errors.description?.join(' ')}
 						/>
 						<Button type='submit'>Submit</Button>
 					</div>
