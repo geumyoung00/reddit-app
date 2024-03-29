@@ -13,7 +13,7 @@ const schema = z.object({
 });
 
 interface Errors {
-	errors: { name?: string; description?: string };
+	errors: { name?: string[]; description?: string[] };
 }
 
 export async function createTopic(formState: Errors, formData: FormData) {
@@ -23,7 +23,6 @@ export async function createTopic(formState: Errors, formData: FormData) {
 	const result = schema.safeParse({ name, description });
 	if (!result.success) {
 		console.log(result.error.flatten().fieldErrors);
-		return { errors: { name: '', description: '' } };
 	}
 
 	// revalidatePath('/');
