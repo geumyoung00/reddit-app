@@ -15,10 +15,6 @@ export default function TopicCreateForm() {
 	const [formState, formAction] = useFormState(createTopic, {
 		errors: {},
 	});
-
-	console.log(!!formState?.errors.name);
-	console.log(formState?.errors.name);
-
 	return (
 		<Popover placement='bottom-end'>
 			<PopoverTrigger>
@@ -44,6 +40,7 @@ export default function TopicCreateForm() {
 							isInvalid={!!formState?.errors.description}
 							errorMessage={formState?.errors.description?.join(' ')}
 						/>
+						<div className='rounded p-2 bg-red-200 border border-red-400'></div>
 						<Button type='submit'>Submit</Button>
 					</div>
 				</form>

@@ -1,6 +1,7 @@
 'use server';
 
 import * as actions from '@/actions';
+import { db } from '@/db';
 import { revalidatePath } from 'next/cache';
 import z from 'zod';
 
@@ -13,20 +14,24 @@ const schema = z.object({
 });
 
 interface Errors {
-	errors: { name?: string[]; description?: string[] };
+	errors: { name?: string[]; description?: string[]; _form?: string[] };
 }
 
 export async function createTopic(formState: Errors, formData: FormData) {
-	const name = formData.get('name');
+	const name = await formData.get('name');
 	const description = formData.get('description');
-
-	console.log('naem___?', name);
-	console.log('description___?', description);
 
 	const result = schema.safeParse({ name, description });
 	if (!result.success) {
 		console.log(result.error?.flatten().fieldErrors);
 		return { errors: result.error?.flatten().fieldErrors };
+	}
+
+	try {
+		db.topic.create({ data: { slug: name, description: description } });
+	} catch (error) {
+		if (error instanceof Error) {
+		}
 	}
 
 	// revalidatePath('/');
