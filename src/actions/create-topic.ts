@@ -2,6 +2,7 @@
 
 import { db } from '@/db';
 import { path } from '@/path';
+import { Topic } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import z from 'zod';
@@ -18,7 +19,12 @@ interface Errors {
 	errors: { name?: string[]; description?: string[]; _form?: string };
 }
 
-export async function createTopic(formState: Errors, formData: FormData) {
+export async function createTopic(
+	formState: Errors,
+	formData: FormData
+): Promise<Errors> {
+	new Promise(resolve => setTimeout(resolve, 3000));
+
 	const name = formData.get('name');
 	const description = formData.get('description');
 
@@ -27,12 +33,12 @@ export async function createTopic(formState: Errors, formData: FormData) {
 		return { errors: result.error?.flatten().fieldErrors };
 	}
 
+	let topicData: Topic;
 	try {
-		await db.topic.create({
+		topicData = await db.topic.create({
 			data: { slug: result.data.name, description: result.data.description },
 		});
-
-		console.log(db.topic.findMany());
+		// throw new Error('예기치 못한 오류');
 	} catch (error) {
 		if (error instanceof Error) {
 			return {
@@ -50,5 +56,5 @@ export async function createTopic(formState: Errors, formData: FormData) {
 	}
 
 	revalidatePath('/');
-	// redirect(`/topics/${path.topicView()}`);
+	redirect(`${path.topicView(topicData.slug)}`);
 }
