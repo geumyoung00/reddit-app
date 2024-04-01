@@ -1,3 +1,4 @@
+import TopicList from '@/components/topics/topic-list';
 import TopicCreateForm from '@/components/topics/topicCreateForm';
 
 export default async function Home() {
@@ -8,6 +9,7 @@ export default async function Home() {
 			</div>
 			<div>
 				<TopicCreateForm />
+				<TopicList />
 			</div>
 		</div>
 	);
