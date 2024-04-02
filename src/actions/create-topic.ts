@@ -1,8 +1,10 @@
 'use server';
 
+import { auth } from '@/auth';
 import { db } from '@/db';
 import { paths } from '@/paths';
 import { Topic } from '@prisma/client';
+import github from 'next-auth/providers/github';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import z from 'zod';
@@ -56,5 +58,5 @@ export async function createTopic(
 	}
 
 	revalidatePath('/');
-	redirect(`${paths.topicView(topicData.slug)}`);
+	redirect(paths.topicView(topicData.slug));
 }

@@ -8,15 +8,22 @@ import {
 	PopoverTrigger,
 	PopoverContent,
 } from '@nextui-org/react';
+import { useFormState } from 'react-dom';
+import { createPost } from '@/actions';
+import { useParams } from 'next/navigation';
 
 export default function PostCreateForm() {
+	const [formState, formAction] = useFormState(createPost, { errors: {} });
+	const params = useParams();
+	const { topicName } = params;
+
 	return (
 		<Popover placement='bottom-end'>
 			<PopoverTrigger>
 				<Button color='primary'>New Post</Button>
 			</PopoverTrigger>
 			<PopoverContent>
-				<form>
+				<form action={formAction.bind(null, topicName)}>
 					<div className='flex flex-col gap-4 p-4 w-80'>
 						<h3 className='text-lg'>Create a Post</h3>
 						<Input
