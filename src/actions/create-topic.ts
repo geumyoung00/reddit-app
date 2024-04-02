@@ -23,7 +23,7 @@ export async function createTopic(
 	formState: Errors,
 	formData: FormData
 ): Promise<Errors> {
-	new Promise(resolve => setTimeout(resolve, 3000));
+	await new Promise(resolve => setTimeout(resolve, 2000));
 
 	const name = formData.get('name');
 	const description = formData.get('description');

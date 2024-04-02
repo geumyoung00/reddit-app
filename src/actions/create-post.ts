@@ -1,10 +1,9 @@
 'use server';
 
-import * as auth from '@/auth';
 import { revalidatePath } from 'next/cache';
 import { NextRequest } from 'next/server';
 
-export async function createPost(post: NextRequest) {
-	await auth.POST(post);
+export async function createPost(formData: FormData) {
+	console.log(formData);
 	// revalidatePath('/topics/[topicName]');
 }
