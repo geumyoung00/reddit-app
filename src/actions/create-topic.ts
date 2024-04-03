@@ -27,6 +27,10 @@ export async function createTopic(
 ): Promise<Errors> {
 	// await new Promise(resolve => setTimeout(resolve, 2000));
 	const session = await auth();
+	if (!session) {
+		return { errors: { _form: '로그인이 필요합니다.' } };
+	}
+
 	const name = formData.get('name');
 	const description = formData.get('description');
 
@@ -37,9 +41,6 @@ export async function createTopic(
 
 	let topicData: Topic;
 	try {
-		if (!session) {
-			return { errors: { _form: '로그인이 필요합니다.' } };
-		}
 		topicData = await db.topic.create({
 			data: { slug: result.data.name, description: result.data.description },
 		});

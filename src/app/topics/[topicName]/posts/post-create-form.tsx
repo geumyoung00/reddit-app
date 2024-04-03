@@ -35,7 +35,7 @@ export default function PostCreateForm({ topicName }: { topicName: string }) {
 							labelPlacement='outside'
 							placeholder='Title'
 							isInvalid={!!formState.errors.title}
-							errorMessage={formState.errors.title}
+							errorMessage={formState.errors.title?.join(' ')}
 						/>
 						<Textarea
 							name='content'
@@ -43,7 +43,7 @@ export default function PostCreateForm({ topicName }: { topicName: string }) {
 							labelPlacement='outside'
 							placeholder='Content'
 							isInvalid={!!formState.errors.content}
-							errorMessage={formState.errors.content}
+							errorMessage={formState.errors.content?.join(' ')}
 						/>
 						{formState.errors._form ? (
 							<div className='rounded p-2 bg-red-200 border border-red-400'>

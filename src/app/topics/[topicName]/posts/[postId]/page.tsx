@@ -1,6 +1,11 @@
-import { db } from '@/db';
+'use client';
+import { useParams } from 'next/navigation';
 
 export default async function PostDetail() {
-	const post = await db.post.findFirst({ where: {} });
-	return <div>{`제목 : ${post?.title}`}</div>;
+	const params = useParams();
+	console.log(params);
+	const { postId } = params;
+	console.log(postId);
+
+	return <div>{`제목 : ${postId}`}</div>;
 }
