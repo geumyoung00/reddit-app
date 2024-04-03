@@ -7,6 +7,7 @@ import { db } from '@/db';
 import { Post } from '@prisma/client';
 import { paths } from '@/paths';
 import { redirect } from 'next/navigation';
+import { chownSync } from 'fs';
 
 interface Errors {
 	errors: { title?: string[]; content?: string[]; _form?: string };
@@ -20,11 +21,22 @@ const schema = z.object({
 	content: z.string().min(5, { message: '내용을 더 써야 해요.' }),
 });
 
-export async function createPost(formData: FormData, formState: Errors) {
+export async function createPost(
+	topicName: string,
+	formState: Errors,
+	formData: FormData
+): Promise<Errors> {
+	const session = await auth();
+	const findTopic = await db.topic.findFirst({
+		where: {
+			slug: topicName,
+		},
+	});
+
 	const title = formData.get('title');
 	const content = formData.get('content');
-	const userId = '';
-	const topicId = '';
+	const userId = session?.user?.id;
+	const topicId = findTopic?.id;
 
 	const result = schema.safeParse({ title, content });
 
@@ -34,14 +46,20 @@ export async function createPost(formData: FormData, formState: Errors) {
 
 	let postData: Post;
 	try {
-		postData = await db.post.create({
-			data: {
-				title: result.data.title,
-				content: result.data.content,
-				userId: '',
-				topicId: '',
-			},
-		});
+		if (!userId) {
+			return { errors: { _form: '로그인이 필요합니다.' } };
+		} else if (!topicId) {
+			return { errors: { _form: '해당하는 topic이 없습니다.' } };
+		} else {
+			postData = await db.post.create({
+				data: {
+					title: result.data.title,
+					content: result.data.content,
+					userId: userId,
+					topicId: topicId,
+				},
+			});
+		}
 	} catch (error) {
 		if (error instanceof Error) {
 			return {
@@ -58,6 +76,5 @@ export async function createPost(formData: FormData, formState: Errors) {
 		}
 	}
 	revalidatePath('/topics/[topicName]');
-	// redirect(paths.postView(postData.id));
-	return { erros: {} };
+	redirect(paths.postView(postData.id, topicName));
 }

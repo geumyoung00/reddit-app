@@ -12,7 +12,7 @@ export default function TopicsName({
 			<div className='col-span-3'>
 				<h1 className='text-2xl font-bold mb-2'>{topicName}</h1>
 			</div>
-			<PostCreateForm />
+			<PostCreateForm topicName={topicName} />
 		</div>
 	);
 }
