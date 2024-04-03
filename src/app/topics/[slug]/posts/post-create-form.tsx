@@ -13,13 +13,10 @@ import { createPost } from '@/actions';
 import { useParams } from 'next/navigation';
 import FormButton from '@/components/common/form-button';
 
-export default function PostCreateForm({ topicName }: { topicName: string }) {
-	const [formState, formAction] = useFormState(
-		createPost.bind(null, topicName),
-		{
-			errors: {},
-		}
-	);
+export default function PostCreateForm({ slug }: { slug: string }) {
+	const [formState, formAction] = useFormState(createPost.bind(null, slug), {
+		errors: {},
+	});
 	return (
 		<Popover placement='bottom-end'>
 			<PopoverTrigger>

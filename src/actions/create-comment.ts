@@ -6,5 +6,5 @@ import { NextRequest } from 'next/server';
 
 export async function createComment(comment: NextRequest) {
 	await auth.POST(comment);
-	// revalidatePath('/topics/[topicName]/posts/[postId]');
+	// revalidatePath('/topics/[slug]/posts/[postId]');
 }

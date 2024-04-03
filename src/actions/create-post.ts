@@ -21,7 +21,7 @@ const schema = z.object({
 });
 
 export async function createPost(
-	topicName: string,
+	slug: string,
 	formState: Errors,
 	formData: FormData
 ): Promise<Errors> {
@@ -31,7 +31,7 @@ export async function createPost(
 	}
 	const findTopic = await db.topic.findFirst({
 		where: {
-			slug: topicName,
+			slug: slug,
 		},
 	});
 	if (!findTopic?.id) {
@@ -73,6 +73,6 @@ export async function createPost(
 			};
 		}
 	}
-	revalidatePath('/topics/[topicName]');
-	redirect(paths.postView(topicName, postData.id));
+	revalidatePath('/topics/[slug]');
+	redirect(paths.postView(slug, postData.id));
 }

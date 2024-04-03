@@ -2,11 +2,11 @@ export const paths = {
 	home() {
 		return '/';
 	},
-	topicView(topicName: string) {
-		return `/topics/${topicName}`;
+	topicView(slug: string) {
+		return `/topics/${slug}`;
 	},
-	postView(topicName: string, postId: string) {
-		return `/topics/${topicName}/posts/${postId}`;
+	postView(slug: string, postId: string) {
+		return `/topics/${slug}/posts/${postId}`;
 	},
 	new() {
 		`/new`;
