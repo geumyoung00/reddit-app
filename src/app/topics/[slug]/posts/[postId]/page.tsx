@@ -1,10 +1,27 @@
-'use client';
-import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import PostShow from '@/components/posts/post-show';
+import CommentList from '@/components/comments/comment-list';
+import CommentCreateForm from '@/components/comments/comment-create-form';
+import { paths } from '@/paths';
 
-export default async function PostDetail() {
-	// const params = useParams();
-	// console.log(params);
-	// const { postId } = params;
-	// console.log(postId);
-	return <div>postDetail 페이지</div>;
+interface PostShowPageProps {
+	params: {
+		slug: string;
+		postId: string;
+	};
+}
+
+export default async function PostShowPage({ params }: PostShowPageProps) {
+	const { slug, postId } = params;
+
+	return (
+		<div className='space-y-3'>
+			<Link className='underline decoration-solid' href={paths.topicView(slug)}>
+				{'< '}Back to {slug}
+			</Link>
+			{/* <PostShow /> */}
+			{/* <CommentCreateForm postId={postId} startOpen /> */}
+			{/* <CommentList comments={comments} /> */}
+		</div>
+	);
 }
