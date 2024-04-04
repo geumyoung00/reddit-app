@@ -1,12 +1,14 @@
 import type { Post, User, Topic } from '@prisma/client';
 import Link from 'next/link';
 import { paths } from '@/paths';
+import { fetchPostBySlug } from '@/db/queries/posts';
 
 // TODO: 어떻게든 이 구성 요소에 posts 목록을 가져옵니다.
-export default function PostList() {
+export default async function PostList({ slug }: { slug: string }) {
+	const posts = await fetchPostBySlug(slug);
+	console.log(posts);
 	const renderedPosts = posts.map(post => {
 		const topicSlug = post.topic.slug;
-
 		if (!topicSlug) {
 			throw new Error('Need a slug to link to a post');
 		}
