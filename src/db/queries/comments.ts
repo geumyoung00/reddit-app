@@ -5,7 +5,7 @@ export type CommentWithData = Comment & {
 	user: { name: string | null; image: string | null };
 };
 
-export async function fetchCommentByPost(
+export async function fetchCommentByPostId(
 	postId: string
 ): Promise<CommentWithData[]> {
 	return db.comment.findMany({
