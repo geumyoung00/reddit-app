@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { Button } from '@nextui-org/react';
 import CommentCreateForm from '@/components/comments/comment-create-form';
-import { Comment } from '@prisma/client';
-import { CommentWithData, fetchCommentByPostId } from '@/db/queries/comments';
+import { fetchCommentByPostId } from '@/db/queries/comments';
+import { resolve } from 'path';
 
 interface CommentShowProps {
 	commentId: string;
@@ -14,6 +14,8 @@ export default async function CommentShow({
 	commentId,
 	postId,
 }: CommentShowProps) {
+	await new Promise(resolve => setTimeout(resolve, 3000));
+
 	const comments = await fetchCommentByPostId(postId);
 	const comment = comments.find(c => c.id === commentId);
 	if (!comment) {
