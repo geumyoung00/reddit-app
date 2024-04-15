@@ -1,4 +1,5 @@
 import { Post } from '@prisma/client';
+import { count } from 'console';
 import { db } from '..';
 
 export type PostWithData = Post & {
@@ -15,5 +16,17 @@ export async function fetchPostBySlug(slug: string): Promise<PostWithData[]> {
 			user: { select: { name: true } },
 			_count: { select: { comments: true } },
 		},
+	});
+}
+
+export async function fetchTopPosts() {
+	return db.post.findMany({
+		orderBy: { createdAt: 'desc' },
+		include: {
+			topic: { select: { slug: true } },
+			user: { select: { name: true } },
+			_count: { select: { comments: true } },
+		},
+		take: 5,
 	});
 }
