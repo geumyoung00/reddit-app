@@ -3,7 +3,6 @@ import PostShow from '@/components/posts/post-show';
 import CommentList from '@/components/comments/comment-list';
 import CommentCreateForm from '@/components/comments/comment-create-form';
 import { paths } from '@/paths';
-import { fetchCommentByPostId } from '@/db/queries/comments';
 
 interface PostShowPageProps {
 	params: {
@@ -14,8 +13,6 @@ interface PostShowPageProps {
 
 export default async function PostShowPage({ params }: PostShowPageProps) {
 	const { slug, postId } = params;
-	const comments = await fetchCommentByPostId(postId);
-
 	return (
 		<div className='space-y-3'>
 			<Link className='underline decoration-solid' href={paths.topicView(slug)}>
@@ -23,7 +20,7 @@ export default async function PostShowPage({ params }: PostShowPageProps) {
 			</Link>
 			<PostShow postId={postId} />
 			<CommentCreateForm postId={postId} startOpen />
-			<CommentList comments={comments} />
+			<CommentList postId={postId} />
 		</div>
 	);
 }

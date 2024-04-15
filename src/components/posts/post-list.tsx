@@ -4,8 +4,12 @@ import { paths } from '@/paths';
 import { PostWithData } from '@/db/queries/posts';
 
 // TODO: 어떻게든 이 구성 요소에 posts 목록을 가져옵니다.
-export default function PostList({ fetchData }: { fetchData: PostWithData[] }) {
-	const posts = fetchData;
+export default async function PostList({
+	fetchData,
+}: {
+	fetchData: () => Promise<PostWithData[]>;
+}) {
+	const posts = await fetchData();
 	const renderedPosts = posts.map(post => {
 		const topicSlug = post.topic.slug;
 		if (!topicSlug) {

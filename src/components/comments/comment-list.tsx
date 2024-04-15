@@ -1,24 +1,21 @@
 import CommentShow from '@/components/comments/comment-show';
-import { CommentWithData } from '@/db/queries/comments';
-import { Comment } from '@prisma/client';
+import { CommentWithData, fetchCommentByPostId } from '@/db/queries/comments';
 
 interface CommentListProps {
 	comments: CommentWithData[];
 }
 
 // TODO: 댓글 목록을 가져와주세요:
-export default async function CommentList({ comments }: CommentListProps) {
+export default async function CommentList({ postId }: { postId: string }) {
+	const comments = await fetchCommentByPostId(postId);
+
 	const topLevelComments = comments.filter(
 		comment => comment.parentId === null
 	);
 
 	const renderedComments = topLevelComments.map(comment => {
 		return (
-			<CommentShow
-				key={comment.id}
-				commentId={comment.id}
-				comments={comments}
-			/>
+			<CommentShow key={comment.id} commentId={comment.id} postId={postId} />
 		);
 	});
 
