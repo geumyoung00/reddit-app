@@ -5,8 +5,9 @@ import {
 	NavbarBrand,
 	NavbarContent,
 	NavbarItem,
-	Input,
 } from '@nextui-org/react';
+import SearchInput from './search-input';
+import { Suspense } from 'react';
 
 export default async function Header() {
 	return (
@@ -18,7 +19,9 @@ export default async function Header() {
 			</NavbarBrand>
 			<NavbarContent justify='center'>
 				<NavbarItem>
-					<Input />
+					<Suspense>
+						<SearchInput />
+					</Suspense>
 				</NavbarItem>
 			</NavbarContent>
 			<NavbarContent justify='end'>
