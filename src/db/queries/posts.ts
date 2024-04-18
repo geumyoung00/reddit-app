@@ -19,7 +19,7 @@ export async function fetchPostBySlug(slug: string): Promise<PostWithData[]> {
 	});
 }
 
-export async function fetchTopPosts() {
+export function fetchTopPosts() {
 	return db.post.findMany({
 		orderBy: { createdAt: 'desc' },
 		include: {
